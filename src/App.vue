@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2 class="color-green">hello vue2-rsbuild</h2>
+    <h2 class="color-red font-size-24px text-ellipsis">hello vue2-rsbuild</h2>
     <Hello />
   </div>
 </template>

@@ -63,6 +63,10 @@ export default defineConfig({
         },
       ]);
       appendPlugins(UnoCSSRspackPlugin());
+      // 修改配置
+      // config.optimization.realContentHash = true;
+      config.cache = false;
+
       if (process.env.RSDOCTOR === "true") {
         appendPlugins(
           new RsdoctorRspackPlugin({
