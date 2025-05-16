@@ -4,6 +4,7 @@ import App from "./App.vue";
 import router from "./router/index";
 import store from "./store/index";
 import Vue from "vue";
+import "uno.css";
 
 Vue.use(ElementUI);
 

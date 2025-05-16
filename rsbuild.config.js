@@ -8,6 +8,7 @@ import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill";
 // import { pluginEslint } from "@rsbuild/plugin-eslint";
 import { pluginImageCompress } from "@rsbuild/plugin-image-compress";
 import { RsdoctorRspackPlugin } from "@rsdoctor/rspack-plugin";
+import { UnoCSSRspackPlugin } from "@unocss/webpack/rspack";
 
 const path = require("path");
 
@@ -61,6 +62,7 @@ export default defineConfig({
           loader: "url-loader",
         },
       ]);
+      appendPlugins(UnoCSSRspackPlugin());
       if (process.env.RSDOCTOR === "true") {
         appendPlugins(
           new RsdoctorRspackPlugin({
