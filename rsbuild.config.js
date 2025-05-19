@@ -12,6 +12,14 @@ import { UnoCSSRspackPlugin } from "@unocss/webpack/rspack";
 
 const path = require("path");
 
+// unocss px转vw
+const px2Vw = (width) => {
+  if (Math.abs(width) < 2) {
+    return width + "px";
+  }
+  return ((width / 1920) * 100).toFixed(5) + "vw";
+};
+
 export default defineConfig({
   plugins: [
     pluginLess({
@@ -58,7 +66,7 @@ export default defineConfig({
     rspack(config, { addRules, appendPlugins }) {
       // 禁用特性 修复1.3版本rust侧运行慢的bug
       config.experiments.parallelCodeSplitting = false;
-      // 修改配置
+      // 修改配置 支持unocss 取消缓存
       // config.optimization.realContentHash = true;
       config.cache = false;
       addRules([
@@ -68,7 +76,20 @@ export default defineConfig({
         },
       ]);
 
-      appendPlugins(UnoCSSRspackPlugin());
+      appendPlugins(
+        UnoCSSRspackPlugin({
+          postprocess: (util) => {
+            const pxRE = /^-?[\.\d]+px$/;
+
+            util.entries.forEach((i) => {
+              const value = i[1];
+              if (value && typeof value === "string" && pxRE.test(value)) {
+                i[1] = px2Vw(value.slice(0, -2) * 1);
+              }
+            });
+          },
+        })
+      );
 
       if (process.env.RSDOCTOR === "true") {
         appendPlugins(
