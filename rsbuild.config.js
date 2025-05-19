@@ -56,16 +56,19 @@ export default defineConfig({
   },
   tools: {
     rspack(config, { addRules, appendPlugins }) {
+      // 禁用特性 修复1.3版本rust侧运行慢的bug
+      config.experiments.parallelCodeSplitting = false;
+      // 修改配置
+      // config.optimization.realContentHash = true;
+      config.cache = false;
       addRules([
         {
           test: /\.md$/,
           loader: "url-loader",
         },
       ]);
+
       appendPlugins(UnoCSSRspackPlugin());
-      // 修改配置
-      // config.optimization.realContentHash = true;
-      config.cache = false;
 
       if (process.env.RSDOCTOR === "true") {
         appendPlugins(

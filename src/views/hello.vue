@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>vue2 + <span>rsbuild</span></p>
+    <p>vue2 + <span class="color-gray">rsbuild</span></p>
   </div>
 </template>
 <script lang="jsx">
